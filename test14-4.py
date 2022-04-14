@@ -2,14 +2,14 @@ import xml.etree.ElementTree as et
 #tạo class chứa các thông tin của 1 người
 class People:
     #override lại init khởi tạo:
-    def __init__(self, ID, createAt, name, age):
-        self.__id = ID
+    def __init__(self, id, createAt, name, age):
+        self.__id = id
         self.__createAt = createAt
         self.__name = name
         self.__age = age
     #override lại str để in các đối tượng từ class ra
     def __init__(self):
-        return f'people[ID={self.__id}, createAt= {self.__createAt}, name={self.__name}, age={self.__age},' 
+        return f'people[id={self.__id}, createAt= {self.__createAt}, name={self.__name}, age={self.__age},' 
     @property
     def name(self):
         return self.__name
@@ -18,33 +18,33 @@ class People:
     def age(self):
         return self.__age  
     @property
-    def ID(self):
+    def id(self):
         return self.__id  
     @property
     def createAt(self):
         return self.__createAt 
     #tạo hàm bóc tách dữ liệu xml:
-    def parse_xml(file_name):
-     tree = et.parse(file_name)
-     root = tree.getroot()
-     danhsach  = []
-     for item in root:
-         ID = item[0].text
-         createAt = item[1].text
-         name = item[2].text
-         age = item[3].text
+def parse_xml(file_name):
+    tree = et.parse(file_name)
+    root = tree.getroot()
+    danhsach  = []
+    for item in root:
+        id = item[0].text
+        createAt = item[1].text
+        name = item[2].text
+        age = item[3].text
 
-         danhsach.append(People(ID, createAt, name,age))
-     return danhsach 
+        danhsach.append(People(id, createAt, name,age))
+    return danhsach 
 
-    def show_danhsach(danhsach):
-     for item in danhsach:
-         print(item)
+def show_danhsach(danhsach):
+    for item in danhsach:
+        print(item)
 
 
-    if __name__ == '__main__'  :
-        file = 'baitap14-4.xml' 
-        peopleList = parse_xml(file)
-        print('Danh sach: ')
-        show_danhsach(danhsach)
+if __name__ == '__main__'  :
+    file = 'baitap14-4.xml' 
+    peopleList = parse_xml(file)
+    print('Danh sach: ')
+    show_danhsach(peopleList)
   
