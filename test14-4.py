@@ -1,50 +1,23 @@
-import xml.etree.ElementTree as et
-#tạo class chứa các thông tin của 1 người
-class People:
-    #override lại init khởi tạo:
-    def __init__(self, id, createAt, name, age):
-        self.__id = id
-        self.__createAt = createAt
-        self.__name = name
-        self.__age = age
-    #override lại str để in các đối tượng từ class ra
-    def __init__(self):
-        return f'people[id={self.__id}, createAt= {self.__createAt}, name={self.__name}, age={self.__age},' 
-    @property
-    def name(self):
-        return self.__name
+from bs4 import BeautifulSoup
+with open('test.xml', 'r') as f:
+    file = f.read()
+soup = BeautifulSoup(file, 'xml')
 
-    @property
-    def age(self):
-        return self.__age  
-    @property
-    def id(self):
-        return self.__id  
-    @property
-    def createAt(self):
-        return self.__createAt 
-    #tạo hàm bóc tách dữ liệu xml:
-def parse_xml(file_name):
-    tree = et.parse(file_name)
-    root = tree.getroot()
-    danhsach  = []
-    for item in root:
-        id = item[0].text
-        createAt = item[1].text
-        name = item[2].text
-        age = item[3].text
-
-        danhsach.append(People(id, createAt, name,age))
-    return danhsach 
-
-def show_danhsach(danhsach):
-    for item in danhsach:
-        print(item)
-
-
-if __name__ == '__main__'  :
-    file = 'baitap14-4.xml' 
-    peopleList = parse_xml(file)
-    print('Danh sach: ')
-    show_danhsach(peopleList)
-  
+people=soup.find_all('people')
+print(len(people))
+x=[]
+y=[]
+for id in people:
+    id=id.get('id')
+    x.append(id)
+for createAt in people:    
+    createAt=createAt.get('createAt')
+    y.append(createAt)
+name = soup.find_all('name')
+age= soup.find_all('age')
+print('-'.center(45, '-'))
+print('|' + 'id'.center(5) + '|' + 'name'.center(15) + '|' + 'age'.center(10) + '|' +'createAt'.center(10) + '|')
+for i in range(0, len(name)):
+    print('-'.center(45, '-'))
+    print(f'|{x[i].center(5)}|{name[i].text.center(15)}|{age[i].text.center(10)}|{y[i].center(10)}|')
+print('-'.center(45, '-'))
